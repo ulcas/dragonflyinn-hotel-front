@@ -28,12 +28,12 @@ Para utilizar, é necessário executar a API, todos os passos de como instalar e
 ## Tecnologias Utilizadas
 
 - [Next.JS](https://nextjs.org/)
-- [Javascript] (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
-- [Node] (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
-- [npm] (https://www.npmjs.com/)
-- [HTML] (https://developer.mozilla.org/pt-BR/docs/Web/HTML)
-- [CSS] (https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-- [Laravel-Breeze] (https://github.com/laravel/breeze)
+- [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/)
+- [Node](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/)
+- [npm](https://www.npmjs.com/)
+- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+- [Laravel-Breeze](https://github.com/laravel/breeze)
 - [Git](https://git-scm.com/)
 - [API Restful](https://aws.amazon.com/pt/what-is/restful-api/)
 
