@@ -28,12 +28,12 @@ Para utilizar, é necessário executar a API, todos os passos de como instalar e
 ## Tecnologias Utilizadas
 
 - [Next.JS](https://nextjs.org/)
-- [Javascript] (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
-- [Node] (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
-- [npm] (https://www.npmjs.com/)
-- [HTML] (https://developer.mozilla.org/pt-BR/docs/Web/HTML)
-- [CSS] (https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-- [Laravel-Breeze] (https://github.com/laravel/breeze)
+- [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/)
+- [Node](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/)
+- [npm](https://www.npmjs.com/)
+- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+- [Laravel-Breeze](https://github.com/laravel/breeze)
 - [Git](https://git-scm.com/)
 - [API Restful](https://aws.amazon.com/pt/what-is/restful-api/)
 
@@ -43,46 +43,34 @@ Para utilizar, é necessário executar a API, todos os passos de como instalar e
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/ulcas/dragonflyinn-hotel
+    git clone https://github.com/ulcas/dragonflyinn-hotel-front
     ```
 2. Acesse o diretório do projeto:
     ```bash
-    cd dragonflyinn-hotel
+    cd dragonflyinn-hotel-front
     ```
 3. Instale as dependências:
     ```bash
-    php composer install
+    npm install
     ```
 
 ## Como Usar
 
-Por ser uma API Restful, a aplicação não é dependente do front-end, portanto, pode ser executada diretamente de uma plataforma de API como [Postman](https://www.postman.com/) ou [Insomnia](https://insomnia.rest/download).
-Para a utilização com o front-end não existe diferença no modo de executar o programa.
+Esta aplicação é dependente do back-end, portanto, deve ser executada junto com a aplicação back-end.
 
-Explique como os usuários podem executar e interagir com o projeto após a instalação. Exemplos de comandos ou passos necessários.
-
-1. Na raiz do projeto, duplique o arquivo `.env.example` e renomeie para `.env` 
+1. Na raiz do projeto, duplique o arquivo `.env.example` e renomeie para `.env.local` 
 2. Execute o comando:
     ```bash
-    php artisan migrate
-    php artisan db:seed
-    php artisan serve
+    npm run dev
     ```
-3. Acesse a URI por alguma plataforma de API com o método GET ou através do browser `http://localhost:8000/api`.
-    - Um texto escrito `welcome` deve aparecer, isso significa que a aplicação está funcionando corretamente :) 
-4. Segue uma tabela dos end-points disponíveis através da API e seus respectivos métodos HTTP:
+3. Acesse a URI por alguma plataforma de API com o método GET ou através do browser `http://localhost:3000/`.
+    - A tela de Reservas Disponíveis deve aparecer (se houver uma, claro :D)
+4. Os end-point utilizados foram:
 
 | Método    | end-point | Tipo de campo | Descrição |
 | -------   | ----- | ------------- | ----------- |
-| GET       | / |   asdas | Welcome |
 | GET       | api/quarto | nenhum | Retorna os quartos disponiveis |
-| PUT/PATCH | api/quarto/{id} | boolean | Atualiza a disponibilidade do quarto |
-| GET       | api/quarto/{id} | int | Retorna o quarto |
-| GET       | api/reserva | nenhum | Retorna todas as reservas |
-| GET       | api/reserva/{email} | string | Retorna a reserva |
 | POST      | api/reserva | body | Cria uma reserva |
-| PUT/PATCH | api/reserva/{id} | id:int/body | Atualiza a reserva |
-| DELETE    | api/reserva/{id} | int | Remove a reserva |
 
 ## Consideracoes
 
