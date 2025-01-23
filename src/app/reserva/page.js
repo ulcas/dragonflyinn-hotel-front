@@ -88,7 +88,7 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1 className="title">Lista de Quartos Disponíveis</h1>
+      <h1 className="title">Quartos Disponíveis</h1>
       <div className="quartos">
         {quartos.length > 0 ? (
           quartos.map((quarto) => (
