@@ -1,0 +1,245 @@
+"use client"
+import { useEffect, useState } from 'react';
+
+export default function Home() {
+  const [quartos, setQuartos] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    quarto_id: '',
+    periodo_de: '',
+    periodo_ate: '',
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:8000/api/quarto')
+      .then((response) => response.json())
+      .then((data) => setQuartos(data))
+      .catch((error) => console.error('Erro ao buscar quartos:', error));
+  }, []);
+
+  const openModal = (quartoId) => {
+    setFormData((prev) => ({ ...prev, quarto_id: quartoId }));
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setFormData({ nome: '', email: '', quarto_id: '', periodo_de: '', periodo_ate: '' });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:8000/api/reserva', {
+        mode: 'no-cors',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        alert('Reserva feita com sucesso!');
+        closeModal();
+      } else {
+        console.error(response.json);
+
+        alert('Erro ao fazer a reserva.');
+      }
+    } catch (error) {
+
+      alert('Erro ao fazer a reserva.');
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.title}>Lista de Quartos</h1>
+      {quartos.length > 0 ? (
+        <div style={styles.quartosContainer}>
+          {quartos.map((quarto) => (
+            <div key={quarto.id} style={styles.quartoCard}>
+              <h2 style={styles.quartoTitle}>{quarto.nome}</h2>
+              <p style={styles.quartoInfo}>Preço: R$ {quarto.preco}</p>
+              <p style={styles.quartoDesc}>{quarto.descricao}</p>
+              <button
+                style={{ ...styles.button, ...styles.buttonHover }}
+                onClick={() => openModal(quarto.id)}
+              >
+                Fazer Reserva
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p style={styles.noQuartos}>Não há quartos disponíveis no momento.</p>
+      )}
+
+      {showModal && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <h2 style={styles.modalTitle}>Reservar Quarto</h2>
+            <form onSubmit={handleSubmit} style={styles.form}>
+              <input
+                type="text"
+                name="nome"
+                placeholder="Seu nome"
+                value={formData.nome}
+                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                style={styles.input}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Seu email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                style={styles.input}
+                required
+              />
+              <input
+                type="date"
+                name="periodo_de"
+                value={formData.periodo_de}
+                onChange={(e) => setFormData({ ...formData, periodo_de: e.target.value })}
+                style={styles.input}
+                required
+              />
+              <input
+                type="date"
+                name="periodo_ate"
+                value={formData.periodo_ate}
+                onChange={(e) => setFormData({ ...formData, periodo_ate: e.target.value })}
+                style={styles.input}
+                required
+              />
+              <button type="submit" style={styles.submitButton}>
+                Confirmar
+              </button>
+              <button type="button" onClick={closeModal} style={styles.cancelButton}>
+                Cancelar
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    fontFamily: 'Arial, sans-serif',
+    padding: '20px',
+    maxWidth: '800px',
+    margin: '0 auto',
+  },
+  title: {
+    textAlign: 'center',
+    color: '#2c3e50',
+    marginBottom: '20px',
+  },
+  quartosContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+    gap: '20px',
+  },
+  quartoCard: {
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    padding: '15px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.2s, box-shadow 0.2s',
+  },
+  quartoCardHover: {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 6px 10px rgba(0, 0, 0, 0.15)',
+  },
+  quartoTitle: {
+    fontSize: '18px',
+    marginBottom: '10px',
+    color: '#333',
+  },
+  quartoInfo: {
+    marginBottom: '8px',
+    color: '#555',
+  },
+  quartoDesc: {
+    marginBottom: '15px',
+    color: '#777',
+  },
+  button: {
+    padding: '10px 15px',
+    backgroundColor: '#3498db',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    transition: 'background-color 0.2s',
+  },
+  buttonHover: {
+    ':hover': {
+      backgroundColor: '#2980b9',
+    },
+  },
+  noQuartos: {
+    textAlign: 'center',
+    color: '#777',
+    marginTop: '20px',
+  },
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    background: '#fff',
+    borderRadius: '8px',
+    padding: '20px',
+    width: '300px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+  },
+  modalTitle: {
+    fontSize: '20px',
+    marginBottom: '15px',
+    color: '#333',
+    textAlign: 'center',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  input: {
+    padding: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    fontSize: '14px',
+  },
+  submitButton: {
+    padding: '10px',
+    backgroundColor: '#27ae60',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+  },
+  cancelButton: {
+    padding: '10px',
+    backgroundColor: '#e74c3c',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s',
+  },
+};
